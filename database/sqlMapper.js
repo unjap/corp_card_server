@@ -5,7 +5,7 @@ module.exports = class sqlMapper {
   static getList(callback) {
     let result = null;
 
-    mysqlDB.query('select * from corp.state', function (err, rows, fields) {
+    mysqlDB.query('select * from corp.list', function (err, rows, fields) {
       if (!err) {
         console.log(rows);
         result = rows;
