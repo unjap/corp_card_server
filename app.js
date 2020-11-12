@@ -3,12 +3,15 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
+const app = express();
 
 // DB Connection Init
 const mysqlDB = require('./database/mysqlDB');
 mysqlDB.connect();
 
-const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // router 등록
 const defaultRouter = require('./routes/index');
