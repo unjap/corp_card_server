@@ -7,7 +7,6 @@ module.exports = class sqlMapper {
   static setBalance(balance, callback) {  
     mysqlDB.query('insert into total (balance) VALUES (?)', [balance], function (err, rows) {
       if (!err) {
-        console.log(rows);
         result = rows;
       } else {
         console.log('query error : ' + err);
@@ -37,7 +36,6 @@ module.exports = class sqlMapper {
   static updateBalance(balance, callback) {  
     mysqlDB.query('update total set balance=?', [balance], function (err, rows) {
       if (!err) {
-        console.log(rows);
         result = rows;
       } else {
         console.log('query error : ' + err);
@@ -90,7 +88,6 @@ module.exports = class sqlMapper {
 
     mysqlDB.query(deleteSql, param, function (err, rows) {
       if (!err) {
-        console.log(rows);
         result = rows;
       } else {
         console.log('query error : ' + err);
@@ -108,7 +105,6 @@ module.exports = class sqlMapper {
 
     mysqlDB.query(updateSql, param, function (err, rows) {
       if (!err) {
-        console.log(rows);
         result = rows;
       } else {
         console.log('query error : ' + err);

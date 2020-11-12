@@ -7,6 +7,7 @@ const sqlMapper = require('../database/sqlMapper');
 router.post('/setTotal', function(req, res) {
   console.log('routes /setTotal');
   const balance = req.body.balance;
+  console.log('balance : ', balance);
   sqlMapper.setBalance(balance, function(queryResult) {
     res.send(queryResult);
   });
