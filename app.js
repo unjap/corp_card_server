@@ -31,6 +31,10 @@ handleDisconnect();
 
 const app = express();
 
+// Body Parser Use First
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
 // router 등록
 const defaultRouter = require('./routes/index');
 app.use('/corp', defaultRouter);
@@ -44,9 +48,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
