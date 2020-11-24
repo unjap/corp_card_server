@@ -5,7 +5,21 @@ let result = null;
 module.exports = class sqlMapper {
   // 법인카드 잔액 Setting (초기 설정)
   static setBalance(balance, callback) {  
-    mysqlDB.query('insert into total (balance) VALUES (?)', [balance], function (err, rows) {
+    mysqlDB.query('insert into total (balance, limitBalance) VALUES (?, ?)', [balance, balance], function (err, rows) {
+      if (!err) {
+        result = rows;
+      } else {
+        console.log('query error : ' + err);
+        result = err;
+      }
+
+      return callback(result);
+    });
+  }
+
+  // 법인카드 한도 변경하기 (한도 변경 금액에 따른 잔액 변경도 된다)
+  static updateLimit(params, callback) {  
+    mysqlDB.query('update total set balance=?, limitBalance=?', [params.balance, params.limitBalance], function (err, rows) {
       if (!err) {
         result = rows;
       } else {
@@ -19,7 +33,7 @@ module.exports = class sqlMapper {
 
   // 법인카드 잔액 가져오기
   static getBalance(callback) { 
-    mysqlDB.query('select balance from total', function (err, rows) {
+    mysqlDB.query('select balance, limitBalance from total', function (err, rows) {
       if (!err) {
         console.log(rows);
         result = rows;

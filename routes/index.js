@@ -3,12 +3,21 @@ const router = express.Router();
 
 const sqlMapper = require('../database/sqlMapper');
 
-// 법인카드 잔액 저장하기
+// 법인카드 한도 및 잔액 저장하기
 router.post('/setTotal', function(req, res) {
   console.log('routes /setTotal');
   const balance = req.body.balance;
   console.log('balance : ', balance);
   sqlMapper.setBalance(balance, function(queryResult) {
+    res.send(queryResult);
+  });
+});
+
+// 법인카드 한도 변경하기 (한도 변경 금액에 따른 잔액 변경도 된다)
+router.post('/updateLimit', function(req, res) {
+  console.log('routes /updateLimit');
+  const params = req.body.params;
+  sqlMapper.updateLimit(params, function(queryResult) {
     res.send(queryResult);
   });
 });
