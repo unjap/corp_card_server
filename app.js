@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const history = require('connect-history-api-fallback');
 
 // DB Connection Init
 const mysqlDB = require('./database/mysqlDB');
@@ -53,6 +54,12 @@ const app = express();
 // Body Parser Use First
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+// Page History 
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
 
 // router 등록
 const defaultRouter = require('./routes/index');
