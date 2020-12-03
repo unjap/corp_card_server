@@ -56,9 +56,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Page History
-app.use(history({
-  verbose: true
-}));
+// ref: https://github.com/bripkens/connect-history-api-fallback
+app.use(history());
 
 // router 등록
 const defaultRouter = require('./routes/index');
