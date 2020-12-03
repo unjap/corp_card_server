@@ -12,37 +12,37 @@ const mysqlDB = require('./database/mysqlDB');
 
 mysqlDB.on('error', function(err) {
   console.log('db error', err);
-  if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
-    return mysqlDB.connect(function(err) {            
-      if(err) {                            
+  if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+    return mysqlDB.connect(function(err) {
+      if(err) {
         console.log('error when connecting to db:', err);
-        setTimeout(handleDisconnect, 2000); 
-      }                                   
-    });                  
-  } else {                                    
-    throw err;                              
+        setTimeout(handleDisconnect, 2000);
+      }
+    });
+  } else {
+    throw err;
   }
 });
 
 // function handleDisconnect() {
-//   // mysqlDB.connect(function(err) {            
-//   //   if(err) {                            
+//   // mysqlDB.connect(function(err) {
+//   //   if(err) {
 //   //     console.log('error when connecting to db:', err);
-//   //     setTimeout(handleDisconnect, 2000); 
-//   //   }                                   
-//   // });                                 
-                                         
+//   //     setTimeout(handleDisconnect, 2000);
+//   //   }
+//   // });
+
 //   mysqlDB.on('error', function(err) {
 //     console.log('db error', err);
-//     if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
-//       return mysqlDB.connect(function(err) {            
-//         if(err) {                            
+//     if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+//       return mysqlDB.connect(function(err) {
+//         if(err) {
 //           console.log('error when connecting to db:', err);
-//           setTimeout(handleDisconnect, 2000); 
-//         }                                   
-//       });                  
-//     } else {                                    
-//       throw err;                              
+//           setTimeout(handleDisconnect, 2000);
+//         }
+//       });
+//     } else {
+//       throw err;
 //     }
 //   });
 // }
@@ -55,9 +55,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Page History 
+// Page History
 app.use(history({
-  disableDotRule: true,
   verbose: true
 }));
 
