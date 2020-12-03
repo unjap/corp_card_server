@@ -56,10 +56,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Page History 
-// app.use(history({
-//   disableDotRule: true,
-//   verbose: true
-// }));
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
 
 // router 등록
 const defaultRouter = require('./routes/index');
