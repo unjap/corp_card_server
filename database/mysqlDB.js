@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const reConnection = null;
+let reConnection = null;
 const connection = mysql.createConnection({
     host: '114.202.216.45',
     post: 3306,
