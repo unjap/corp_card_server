@@ -16,7 +16,7 @@ mysqlDB.on('error', function(err) {
     return mysqlDB.connect(function(err) {
       if(err) {
         console.log('error when connecting to db:', err);
-        setTimeout(handleDisconnect, 2000);
+        mysqlDB.connect();
       }
     });
   } else {
