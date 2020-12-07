@@ -9,4 +9,8 @@ const connection = mysql.createConnection({
     dateStrings: 'date'
 });
 
+connection.handleDisconnect = () => {
+    connection = mysql.createConnection(connection);
+  }
+
 module.exports = connection;

@@ -16,7 +16,7 @@ mysqlDB.on('error', function(err) {
     return mysqlDB.connect(function(err) {
       if(err) {
         console.log('error when connecting to db:', err);
-        mysqlDB.connect();
+        mysqlDB.handleDisconnect();
       }
     });
   } else {
@@ -24,28 +24,7 @@ mysqlDB.on('error', function(err) {
   }
 });
 
-// function handleDisconnect() {
-//   // mysqlDB.connect(function(err) {
-//   //   if(err) {
-//   //     console.log('error when connecting to db:', err);
-//   //     setTimeout(handleDisconnect, 2000);
-//   //   }
-//   // });
 
-//   mysqlDB.on('error', function(err) {
-//     console.log('db error', err);
-//     if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-//       return mysqlDB.connect(function(err) {
-//         if(err) {
-//           console.log('error when connecting to db:', err);
-//           setTimeout(handleDisconnect, 2000);
-//         }
-//       });
-//     } else {
-//       throw err;
-//     }
-//   });
-// }
 
 // handleDisconnect();
 
