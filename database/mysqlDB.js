@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
     host: '114.202.216.45',
     post: 3306,
     user: 'iptvteam',
@@ -9,11 +9,22 @@ const connection = mysql.createConnection({
     dateStrings: 'date'
 });
 
-const handleDisconnect = () => {
-    mysql.createConnection(connection);
+function handleDisconnect() {
+    db.connect(function(err) {
+        if(err) {
+            console.log('error when connection to db: ', err);
+            setTimeout(handleDisconnect, 1000);
+        }
+    });
+
+    db.on('error', function(err) {
+        console.log('db error ', err);
+        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            return handleDisconnect();
+        } else {
+            throw err;
+        }
+    })
 }
 
-module.exports = {
-    connection,
-    handleDisconnect
-}
+handleDisconnect()
