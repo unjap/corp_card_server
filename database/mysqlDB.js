@@ -20,6 +20,7 @@ function handleDisconnect() {
     db.on('error', function(err) {
         console.log('db error ', err);
         if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            db.end();
             return handleDisconnect();
         } else {
             throw err;
