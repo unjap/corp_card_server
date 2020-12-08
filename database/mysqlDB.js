@@ -13,4 +13,7 @@ const handleDisconnect = () => {
     mysql.createConnection(connection);
 }
 
-export { connection, handleDisconnect };
+module.exports = {
+    connection,
+    handleDisconnect
+}
