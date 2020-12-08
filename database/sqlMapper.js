@@ -1,10 +1,11 @@
-const mysqlDB = require('./mysqlDB');
+// const mysqlDB = require('./mysqlDB');
+const {connection: mysqlDB} = require('./mysqlDB');
 
 let result = null;
 
 module.exports = class sqlMapper {
   // 법인카드 잔액 Setting (초기 설정)
-  static setBalance(balance, callback) {  
+  static setBalance(balance, callback) {
     mysqlDB.query('insert into total (balance, limitBalance) VALUES (?, ?)', [balance, balance], function (err, rows) {
       if (!err) {
         result = rows;
@@ -18,7 +19,7 @@ module.exports = class sqlMapper {
   }
 
   // 법인카드 한도 변경하기 (한도 변경 금액에 따른 잔액 변경도 된다)
-  static updateLimit(params, callback) {  
+  static updateLimit(params, callback) {
     mysqlDB.query('update total set balance=?, limitBalance=?', [params.balance, params.limitBalance], function (err, rows) {
       if (!err) {
         result = rows;
@@ -32,7 +33,7 @@ module.exports = class sqlMapper {
   }
 
   // 법인카드 잔액 가져오기
-  static getBalance(callback) { 
+  static getBalance(callback) {
     mysqlDB.query('select balance, limitBalance from total', function (err, rows) {
       if (!err) {
         console.log(rows);
@@ -47,7 +48,7 @@ module.exports = class sqlMapper {
   }
 
   // 법인카드 잔액 Update
-  static updateBalance(balance, callback) {  
+  static updateBalance(balance, callback) {
     mysqlDB.query('update total set balance=?', [balance], function (err, rows) {
       if (!err) {
         result = rows;
@@ -79,7 +80,7 @@ module.exports = class sqlMapper {
   static registUsage(params, callback) {
     const insertSql = 'insert into list (amount, date, category, timeInMs, memo, usedDate, customer, purpose) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     const param = [
-      params.amount, params.date, params.category, params.timeInMs, params.memo, params.usedDate, params.customer, params.purpose, 
+      params.amount, params.date, params.category, params.timeInMs, params.memo, params.usedDate, params.customer, params.purpose,
     ];
 
     mysqlDB.query(insertSql, param, function (err, rows) {
