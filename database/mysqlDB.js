@@ -1,17 +1,33 @@
 const mysql = require('mysql');
+const db_config = {
+  host: '114.202.216.45',
+  post: 3306,
+  user: 'iptvteam',
+  password: 'open1404',
+  database: 'corp',
+  dateStrings: 'date'
+};
 
-let reConnection = null;
-const connection = mysql.createConnection({
-    host: '114.202.216.45',
-    post: 3306,
-    user: 'iptvteam',
-    password: 'open1404',
-    database: 'corp',
-    dateStrings: 'date'
-});
+function handleDisconnect() {
+  let connection = mysql.createConnection(db_config);
 
-connection.handleDisconnect = () => {
-    reConnection = mysql.createConnection(connection);
-  }
+  connection.connect(function(err) {
+    if (err) {
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
 
-module.exports = connection;
+  connection.on('error', function(err) {
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+      console.log('PROTOCOL_CONNECTION_LOST => mysql execute reconnection');
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+
+  global.connection = connection;
+}
+
+module.exports = handleDisconnect;

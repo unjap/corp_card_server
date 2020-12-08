@@ -1,11 +1,9 @@
-const mysqlDB = require('./mysqlDB');
-
 let result = null;
-
 module.exports = class sqlMapper {
   // 법인카드 잔액 Setting (초기 설정)
+
   static setBalance(balance, callback) {
-    mysqlDB.query('insert into total (balance, limitBalance) VALUES (?, ?)', [balance, balance], function (err, rows) {
+    global.connection.query('insert into total (balance, limitBalance) VALUES (?, ?)', [balance, balance], function (err, rows) {
       if (!err) {
         result = rows;
       } else {
@@ -19,7 +17,7 @@ module.exports = class sqlMapper {
 
   // 법인카드 한도 변경하기 (한도 변경 금액에 따른 잔액 변경도 된다)
   static updateLimit(params, callback) {
-    mysqlDB.query('update total set balance=?, limitBalance=?', [params.balance, params.limitBalance], function (err, rows) {
+    global.connection.query('update total set balance=?, limitBalance=?', [params.balance, params.limitBalance], function (err, rows) {
       if (!err) {
         result = rows;
       } else {
@@ -33,7 +31,7 @@ module.exports = class sqlMapper {
 
   // 법인카드 잔액 가져오기
   static getBalance(callback) {
-    mysqlDB.query('select balance, limitBalance from total', function (err, rows) {
+    global.connection.query('select balance, limitBalance from total', function (err, rows) {
       if (!err) {
         console.log(rows);
         result = rows;
@@ -48,7 +46,7 @@ module.exports = class sqlMapper {
 
   // 법인카드 잔액 Update
   static updateBalance(balance, callback) {
-    mysqlDB.query('update total set balance=?', [balance], function (err, rows) {
+    global.connection.query('update total set balance=?', [balance], function (err, rows) {
       if (!err) {
         result = rows;
       } else {
@@ -62,7 +60,7 @@ module.exports = class sqlMapper {
 
   // 사용내역 가져오기
   static getList(callback) {
-    mysqlDB.query('select * from list', function (err, rows) {
+    global.connection.query('select * from list', function (err, rows) {
       if (!err) {
         console.log(rows);
         result = rows;
@@ -82,7 +80,7 @@ module.exports = class sqlMapper {
       params.amount, params.date, params.category, params.timeInMs, params.memo, params.usedDate, params.customer, params.purpose,
     ];
 
-    mysqlDB.query(insertSql, param, function (err, rows) {
+    global.connection.query(insertSql, param, function (err, rows) {
       if (!err) {
         console.log(rows);
         result = rows;
@@ -100,7 +98,7 @@ module.exports = class sqlMapper {
     const deleteSql = 'delete from list where timeInMs=?';
     const param = [ params.timeInMs ];
 
-    mysqlDB.query(deleteSql, param, function (err, rows) {
+    global.connection.query(deleteSql, param, function (err, rows) {
       if (!err) {
         result = rows;
       } else {
@@ -117,7 +115,7 @@ module.exports = class sqlMapper {
     const updateSql = `update list set ${params.columnName}=? where timeInMs=?`;
     const param = [ params.columnValue, params.timeInMs ];
 
-    mysqlDB.query(updateSql, param, function (err, rows) {
+    global.connection.query(updateSql, param, function (err, rows) {
       if (!err) {
         result = rows;
       } else {
