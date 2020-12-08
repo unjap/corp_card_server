@@ -10,13 +10,16 @@ const history = require('connect-history-api-fallback');
 const mysqlDB = require('./database/mysqlDB');
 // mysqlDB.connect();
 
-mysqlDB.on('error', function(err) {
+const connection = mysqlDB.connection;
+const handleDisconnect = mysqlDB.handleDisconnect;
+
+connection.on('error', function(err) {
   console.log('db error', err);
   if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-    return mysqlDB.connect(function(err) {
+    return connection.connect(function(err) {
       if(err) {
         console.log('error when connecting to db:', err);
-        mysqlDB.handleDisconnect();
+        handleDisconnect();
       }
     });
   } else {
