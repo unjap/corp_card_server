@@ -1,5 +1,4 @@
-// const mysqlDB = require('./mysqlDB');
-const {connection: mysqlDB} = require('./mysqlDB');
+const mysqlDB = require('./mysqlDB');
 
 let result = null;
 
