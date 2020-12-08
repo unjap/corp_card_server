@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const history = require('connect-history-api-fallback');
 
 // DB Connection Init
-const mysqlDB = require('./database/mysqlDB');
+// const mysqlDB = require('./database/mysqlDB');
 // mysqlDB.connect();
+import { connection as mysqlDB, handleDisconnect} from './database/mysqlDB';
 
 mysqlDB.on('error', function(err) {
   console.log('db error', err);
@@ -16,7 +17,7 @@ mysqlDB.on('error', function(err) {
     return mysqlDB.connect(function(err) {
       if(err) {
         console.log('error when connecting to db:', err);
-        mysqlDB.handleDisconnect();
+        handleDisconnect();
       }
     });
   } else {

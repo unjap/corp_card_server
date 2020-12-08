@@ -1,6 +1,5 @@
 const mysql = require('mysql');
 
-let reConnection = null;
 const connection = mysql.createConnection({
     host: '114.202.216.45',
     post: 3306,
@@ -10,8 +9,8 @@ const connection = mysql.createConnection({
     dateStrings: 'date'
 });
 
-connection.handleDisconnect = () => {
-    reConnection = mysql.createConnection(connection);
-  }
+const handleDisconnect = () => {
+    mysql.createConnection(connection);
+}
 
-module.exports = connection;
+export { connection, handleDisconnect };
