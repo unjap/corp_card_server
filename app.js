@@ -6,31 +6,31 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const history = require('connect-history-api-fallback');
 
-// DB Connection Init
-// const mysqlDB = require('./database/mysqlDB');
-const { connection: mysqlDB, handleDisconnect } = require('./database/mysqlDB');
-// mysqlDB.connect();
+// // DB Connection Init
+// // const mysqlDB = require('./database/mysqlDB');
+// const { connection: mysqlDB, handleDisconnect } = require('./database/mysqlDB');
+// // mysqlDB.connect();
 
-// const connection = mysqlDB.connection;
-// const handleDisconnect = mysqlDB.handleDisconnect;
+// // const connection = mysqlDB.connection;
+// // const handleDisconnect = mysqlDB.handleDisconnect;
 
-mysqlDB.on('error', function(err) {
-  console.log('db error', err);
-  if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-    return mysqlDB.connect(function(err) {
-      if(err) {
-        console.log('error when connecting to db:', err);
-        handleDisconnect();
-      }
-    });
-  } else {
-    throw err;
-  }
-});
+// mysqlDB.on('error', function(err) {
+//   console.log('db error', err);
+//   if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+//     return mysqlDB.connect(function(err) {
+//       if(err) {
+//         console.log('error when connecting to db:', err);
+//         handleDisconnect();
+//       }
+//     });
+//   } else {
+//     throw err;
+//   }
+// });
 
 
 
-// handleDisconnect();
+// // handleDisconnect();
 
 const app = express();
 
