@@ -5,8 +5,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const history = require('connect-history-api-fallback');
+const sqlMapper = require('./database/sqlMapper');
+const cron = require('node-cron');
 
 
+const MAX_LIMIT_A_MONTH = 1000000;
 const mysqlDB = require('./database/mysqlDB');
 mysqlDB();
 
@@ -48,6 +51,14 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+cron.schedule('* * 2 * *', function() {
+  const params = {
+    balance: MAX_LIMIT_A_MONTH,
+    limitBalance: MAX_LIMIT_A_MONTH
+  }
+  sqlMapper.updateLimit(params, ()=>{console.log('Reset total balance every second day of the month')});
 });
 
 module.exports = app;
