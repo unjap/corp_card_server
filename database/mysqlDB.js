@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const db_config = {
-  host: '114.202.216.45',
+  host: '221.139.81.196',
   post: 3306,
   user: 'iptvteam',
   password: 'open1404',
